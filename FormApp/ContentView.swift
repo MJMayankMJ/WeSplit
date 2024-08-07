@@ -13,6 +13,13 @@ struct ContentView: View {
     @State private var noOfPeople = 2
     @State private var tipPercentage = 15
     @FocusState private var isFocused : Bool
+    var noTipSelected: Bool{
+        if(tipPercentage == 0) {
+            return true
+        } else {
+            return false
+        }
+    }
      
     let tipPercentages = 0..<101
     
@@ -63,10 +70,12 @@ struct ContentView: View {
                 //It’s tempting to think that modifier should be attached to the end of the NavigationStack, but it needs to be attached to the end of the Form instead. The reason is that navigation stacks are capable of showing many views as your program runs, so by attaching the title to the thing inside the navigation stack we’re allowing iOS to change titles freely.
                 Section("Total"){
                     Text(total, format:  .currency(code: Locale.current.currency?.identifier ?? "USD"))
+                        .foregroundStyle(noTipSelected ? .red : .black)
                 }
             }
         }
     }
+    
 }
 
 #Preview {
